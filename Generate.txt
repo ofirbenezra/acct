@@ -1,0 +1,2 @@
+sequelize-auto -o "./models" -d acct -h [host] -u root -p 3306 -x [db_password] -e mysql
+
