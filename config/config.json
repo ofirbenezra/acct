@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "root",
+    "password": "Intersurf12",
+    "database": "acct",
+    "host": "localhost",
+    "dialect": "mysql",
+    "define": {
+      "freezeTableName": "true"
+    }
+  },
+  "test": {
+    "username": "root",
+    "password": "Intersurf12",
+    "database": "acct",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "triplan",
+    "password": "Intersurf12",
+    "database": "acct",
+    "host": "ec2-34-214-99-115.us-west-2.compute.amazonaws.com",
+    "dialect": "mysql"
+  }
+}
