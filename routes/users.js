@@ -2,6 +2,19 @@ var express = require('express');
 var router = express.Router();
 var models  = require('../models');
 
+//get users by office_id and user type
+router.get('/', function (req, res, next) {
+
+    var sql  =  'SELECT USR.name, USR.last_name, USR.office_phone, USR.office_id ' +
+                'FROM acct.users as USR, office_details as OD ' +
+                'where USR.office_id = ' + req.query.office_id + ' AND USR.user_type = ' + req.query.user_type + ';';
+    models.users.sequelize.query(sql,{ type: models.users.sequelize.QueryTypes.SELECT})
+        .then(function(users) {
+            res.json(users);
+        })
+
+});
+
 //get user by id
 router.get('/:id', function (req, res, next) {
     models.users.findAll({
@@ -31,90 +44,25 @@ router.route('/')
 
     });
 
-// router.put('/:id', function (req, res, next) {
-//     const isGuide = req.query.isGuide == 'true'? true :false;
-//     if(isGuide){
-//         models.tourguide.update({
-//
-//                 "firstName": req.body.firstName,
-//                 "lastName": req.body.lastName,
-//                 "description": req.body.description,
-//                 "profilePicture": req.body.profilePicture,
-//                 "email": req.body.email,
-//                 "password": req.body.password,
-//                 "verificationFlag": req.body.verificationFlag,
-//                 "country": req.body.country,
-//                 "phone": req.body.phone,
-//                 "rating": req.body.rating
-//             },
-//             {
-//                 where: {
-//                     tourGuideId: req.params.id
-//                 }
-//             }).then(function (user) {
-//             res.json(user);
-//         });
-//     }
-//     else {
-//         models.user.update(
-//             {   "firstName": req.body.firstName,
-//                 "lastName": req.body.lastName,
-//                 "email": req.body.email,
-//                 "password": req.body.password,
-//                 "verificationFlag": req.body.verificationFlag,
-//                 "country": req.body.country
-//             },{
-//                 where: {
-//                     userId: req.params.id
-//                 }
-//             }
-//         ).then(function (user) {
-//             res.json(user);
-//         });
-//     }
-//
-// });
-//
-// router.route('/login')
-//     .post(function (req, res) {
-//         const isGuide = req.query.isGuide == 'true'? true :false;
-//         if(isGuide){
-//             models.tourguide.findOne({
-//                 attributes: { exclude: ['password']} ,
-//                 where: {
-//                     email: req.body.email,
-//                     password: req.body.password
-//
-//                 }
-//             }).then(function (user) {
-//                 if(user != null){
-//                     res.json(user);
-//                 }
-//                 else{
-//                     res.json({});
-//                 }
-//
-//             });
-//         }
-//         else{
-//             models.user.findOne({
-//                 attributes: { exclude: ['password']} ,
-//                 where: {
-//                     email: req.body.email,
-//                     password: req.body.password
-//
-//                 }
-//             }).then(function (user) {
-//                 if(user != null){
-//                     res.json(user);
-//                 }
-//                 else{
-//                     res.json({});
-//                 }
-//
-//             });
-//         }
-//     });
+//update user
+router.put('/:office_id', function (req, res, next) {
+    models.users.update({
 
+            "office_phone": req.body.office_phone,
+            "name": req.body.name,
+            "description": req.body.description,
+            "last_name": req.body.last_name,
+            "email": req.body.email,
+            "password": req.body.password
+        },
+        {
+            where: {
+                office_id: req.params.office_id
+            }
+        }).then(function (user) {
+        res.json(user);
+    });
+
+});
 
 module.exports = router;
