@@ -17,10 +17,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "triplan",
-    "password": "Intersurf12",
+    "username": "ost",
+    "password": "Attunity@2018",
     "database": "acct",
-    "host": "ec2-34-214-99-115.us-west-2.compute.amazonaws.com",
+    "host": "34.250.254.80",
     "dialect": "mysql"
   }
 }
