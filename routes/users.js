@@ -64,4 +64,16 @@ router.put('/:office_id', function (req, res, next) {
 
 });
 
+// Delete user by id
+router.delete('/:id', function (req, res) {
+    models.users.destroy({
+        where: {
+            id: req.params.id
+        }
+    }).then(function () {
+        res.json({message: 'User with id ' + req.params.id + ' deleted!'});
+    });
+});
+
+
 module.exports = router;
