@@ -48,7 +48,19 @@ router.route('/')
 
     });
 
-// Delete user by id
+//update message_read
+router.route('/')
+    .put(function (req, res) {
+        models.messages.update({
+            message_read: req.body.message_read
+        }, {
+            where: {id: req.query.id}
+        }).then(function (tag) {
+            res.json({message: 'message_read updated!'});
+        });
+    });
+
+// Delete message by id
 router.delete('/:id', function (req, res) {
     models.messages.destroy({
         where: {

@@ -39,6 +39,10 @@ module.exports = function(sequelize, DataTypes) {
     file_id: {
       type: DataTypes.INTEGER(11),
       allowNull: true
+    },
+    message_read: {
+        type: DataTypes.TINYINT(1),
+        allowNull: false
     }
   },{
       timestamps: false
