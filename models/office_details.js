@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
     office_id: {
       type: DataTypes.STRING(20),
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     office_type: {
       type: DataTypes.INTEGER(11),
@@ -36,6 +37,8 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     }
   }, {
+      timestamps: false
+  },{
     tableName: 'office_details'
   });
 };
