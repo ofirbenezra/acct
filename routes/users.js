@@ -44,9 +44,8 @@ router.route('/')
     });
 
 //update user
-router.put('/:office_id', function (req, res, next) {
+router.put('/', function (req, res, next) {
     models.users.update({
-
             "office_phone": req.body.office_phone,
             "name": req.body.name,
             "description": req.body.description,
@@ -56,7 +55,8 @@ router.put('/:office_id', function (req, res, next) {
         },
         {
             where: {
-                office_id: req.params.office_id
+                office_id: req.query.office_id,
+                id: req.query.user_id
             }
         }).then(function (user) {
         res.json(user);
