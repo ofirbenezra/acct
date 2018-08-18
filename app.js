@@ -22,10 +22,11 @@ app.set('view engine', 'jade');
 // Add headers
 app.use(function (req, res, next) {
     // // Website you wish to allow to connect
-    var allowedOrigins = ['http://localhost:4200', 'http://triplan.web.s3-website-us-west-2.amazonaws.com'];
+    var allowedOrigins = ['http://localhost:4200'];
     var origin = req.headers.origin;
     if(allowedOrigins.indexOf(origin) > -1){
         res.setHeader('Access-Control-Allow-Origin', origin);
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     }
 
     //
