@@ -42,7 +42,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     message_read: {
         type: DataTypes.TINYINT(1),
-        allowNull: false
+        allowNull: false,
+        defaultValue: 0
     }
   },{
       timestamps: false
