@@ -71,4 +71,54 @@ router.delete('/:id', function (req, res) {
     });
 });
 
+//add message template
+router.route('/templates/')
+    .post(function (req, res) {
+        models.message_templates.create({
+            id: req.body.sender_id,
+            office_id: req.body.office_id,
+            title: req.body.title,
+            body: req.body.body
+        }).then(function (msgTpl) {
+            res.json(msgTpl);
+        });
+
+    });
+
+//Get all message template by office
+router.route('/templates/office/:office_id')
+    .get(function (req, res) {
+        models.message_templates.findAll({
+            where: {
+                office_id: req.params.office_id
+            }
+        }).then(function (msgTpls) {
+            res.json(msgTpls);
+        });
+
+    });
+
+//Get message template by id
+router.route('/templates/:id')
+    .get(function (req, res) {
+        models.message_templates.findOne({
+            where: {
+                id: req.params.id
+            }
+        }).then(function (msgTpl) {
+            res.json(msgTpl);
+        });
+
+    });
+
+// Delete message template by id
+router.delete('/templates/:id', function (req, res) {
+    models.message_templates.destroy({
+        where: {
+            id: req.params.id
+        }
+    }).then(function () {
+        res.json({message: 'Message template with id ' + req.params.id + ' deleted!'});
+    });
+});
 module.exports = router;
