@@ -2,8 +2,8 @@ const AWS = require('aws-sdk');
 const Busboy = require('busboy');
 
 const BUCKET_NAME = 'ost.acct';
-const IAM_USER_KEY = 'AKIAI2QFURORX4QDLBXQ';
-const IAM_USER_SECRET = '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';
+const IAM_USER_KEY = '';
+const IAM_USER_SECRET = '';
 
 module.exports.uploadToS3 = function(file) {
     let s3bucket = new AWS.S3({
