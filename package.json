@@ -6,7 +6,11 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "aws-sdk": "^2.320.0",
     "body-parser": "~1.17.1",
+    "busboy": "^0.2.14",
+    "busboy-body-parser": "^0.3.2",
+    "connect-busboy": "0.0.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "express": "~4.15.2",
