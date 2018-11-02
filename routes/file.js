@@ -1,6 +1,7 @@
 const Busboy = require('busboy');
 var express = require('express');
 const router = express.Router();
+var models  = require('../models');
 const s3FileUploader = require('../s3Uploader');
 
 
@@ -24,7 +25,21 @@ router.post('/upload', function (req, res, next) {
         // }
         // Grabs your file object from the request.
         const file = req.files.file;
-        s3FileUploader.uploadToS3(file);
+        var uploadPromise = s3FileUploader.uploadToS3(file);
+        uploadPromise.then(function(result) {
+            models.files.create({
+                file_id: Math.random().toString(20),
+                file_name: file.name,
+                s3_url: result,
+                sender_id: req.body.sender_id,
+                reciever_id: req.body.reciever_id,
+                date: Date.now()
+            }).then(function (fileRes) {
+                res.json(fileRes.file_id);
+            });
+        }, function(err) {
+            console.log(err);
+        });
     });
     req.pipe(busboy);
 });

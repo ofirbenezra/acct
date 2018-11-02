@@ -18,6 +18,7 @@ router.route('/')
     .post(function (req, res) {
         models.office_details.create({
             office_id: req.body.office_id,
+            user_id: req.body.user_id,
             office_type: req.body.office_type,
             email: req.body.email,
             country: req.body.country,
