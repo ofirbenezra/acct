@@ -7,10 +7,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    user_id: {
-        type: DataTypes.STRING(20),
-        allowNull: true
-    },
     office_type: {
       type: DataTypes.INTEGER(11),
       allowNull: true,
