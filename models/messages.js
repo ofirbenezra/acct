@@ -37,7 +37,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     file_id: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.STRING(20),
       allowNull: true
     },
     message_read: {

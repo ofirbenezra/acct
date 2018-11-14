@@ -41,7 +41,8 @@ router.route('/')
             reciever_id: req.body.reciever_id,
             title: req.body.title,
             body: req.body.body,
-            sent_date: req.body.sent_date
+            sent_date: req.body.sent_date,
+            file_id: req.body.file_id
         }).then(function (msg) {
             res.json(msg);
         });

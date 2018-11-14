@@ -43,4 +43,16 @@ router.post('/upload', function (req, res, next) {
     });
     req.pipe(busboy);
 });
+
+//get file by file_id
+router.get('/', function (req, res, next) {
+    models.files.findAll({
+        where: {
+            file_id: req.query.file_id
+        }
+    }).then(function (msg) {
+        res.json(msg);
+    });
+
+});
 module.exports = router;
