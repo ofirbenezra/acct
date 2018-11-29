@@ -44,6 +44,11 @@ router.post('/upload', function (req, res, next) {
     req.pipe(busboy);
 });
 
+router.get('/download/:fileName', function (req, res, next) {
+    const fileKey = req.params.fileName;
+    s3FileUploader.downLoadFromS3(fileKey, res);
+});
+
 //get file by file_id
 router.get('/', function (req, res, next) {
     models.files.findAll({

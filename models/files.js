@@ -12,6 +12,10 @@ module.exports = function (sequelize, DataTypes) {
             type: DataTypes.STRING(100),
             allowNull: true
         },
+        file_name: {
+            type: DataTypes.STRING(100),
+            allowNull: true
+        },
         s3_url: {
             type: DataTypes.STRING(100),
             allowNull: true

@@ -1,17 +1,20 @@
 const AWS = require('aws-sdk');
 const Busboy = require('busboy');
 const promise = require('Promise');
+const fs = require('fs');
 
 const BUCKET_NAME = 'ost.acct';
-const IAM_USER_KEY = 'xxx';
-const IAM_USER_SECRET = 'xxx';
+const IAM_USER_KEY = 'XXXXXXX';
+const IAM_USER_SECRET = 'XXXXX';
+
+const s3bucket = new AWS.S3({
+    accessKeyId: IAM_USER_KEY,
+    secretAccessKey: IAM_USER_SECRET,
+    Bucket: BUCKET_NAME,
+});
 
 module.exports.uploadToS3 = function(file) {
-    let s3bucket = new AWS.S3({
-        accessKeyId: IAM_USER_KEY,
-        secretAccessKey: IAM_USER_SECRET,
-        Bucket: BUCKET_NAME,
-    });
+
 
     return new Promise(function(resolve, reject) {
         s3bucket.createBucket(function () {
@@ -33,6 +36,19 @@ module.exports.uploadToS3 = function(file) {
 
         });
     });
+
+}
+
+
+module.exports.downLoadFromS3 = function(fileName, res) {
+
+    var getParams = {
+        Bucket: BUCKET_NAME,
+        Key: fileName
+    }
+    res.attachment(fileName);
+    var fileStream = s3bucket.getObject(getParams).createReadStream();
+    fileStream.pipe(res);
 
 }
 
