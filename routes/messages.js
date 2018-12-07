@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var models  = require('../models');
+var models = require('../models');
+const promise = require('Promise');
 
 //get messages by sender id
 router.get('/', function (req, res, next) {
@@ -36,18 +37,39 @@ router.get('/', function (req, res, next) {
 //add message
 router.route('/')
     .post(function (req, res) {
-        models.messages.create({
-            sender_id: req.body.sender_id,
-            reciever_id: req.body.reciever_id,
-            title: req.body.title,
-            body: req.body.body,
-            sent_date: req.body.sent_date,
-            file_id: req.body.file_id
-        }).then(function (msg) {
-            res.json(msg);
-        });
+        const recipients = req.body.reciever_ids;
+        models.sequelize.transaction(function (t) {
+            var promises = []
+            for (var i = 0; i < recipients.length; i++) {
+                var newPromise = models.messages.create({
+                        sender_id: req.body.sender_id,
+                        reciever_id: recipients[i],
+                        title: req.body.title,
+                        body: req.body.body,
+                        sent_date: req.body.sent_date,
+                        file_id: req.body.file_id
+                    },
+                    {transaction: t});
+                promises.push(newPromise);
+            }
+            ;
+            return Promise.all(promises).then(function (messages) {
+                res.json({
+                    sender_id: req.body.sender_id,
+                    reciever_ids: recipients,
+                    title: req.body.title,
+                    body: req.body.body,
+                    sent_date: req.body.sent_date,
+                    file_id: req.body.file_id
+                });
+            }).catch(function (err) {
+                console.log(err);
+                return next(err);
+            });
 
+        });
     });
+
 
 //update message_read
 router.route('/')
@@ -86,6 +108,24 @@ router.route('/templates/')
 
     });
 
+//Update message template by id
+router.route('/templates/:id')
+    .put(function (req, res, next) {
+        models.message_templates.update({
+            title: req.body.title,
+            body: req.body.body
+        }, {
+            where: {
+                id: req.params.id,
+            }
+        }).then(function (msgTpl) {
+            getTemplateById(req.params.id).then(function (result) {
+                res.json(result);
+            }).catch(next);
+
+        });
+    });
+
 //Get all message template by office
 router.route('/templates/office/:office_id')
     .get(function (req, res) {
@@ -94,23 +134,37 @@ router.route('/templates/office/:office_id')
                 office_id: req.params.office_id
             }
         }).then(function (msgTpls) {
-            res.json(msgTpls);
+            const templates = msgTpls;
+            models.default_message_templates.findAll()
+                .then(function (defaultMsgTpls) {
+                    const result = templates.concat(defaultMsgTpls);
+                    res.json(result);
+                });
         });
-
     });
 
 //Get message template by id
 router.route('/templates/:id')
-    .get(function (req, res) {
+    .get(function (req, res, next) {
+        getTemplateById(req.params.id).then(function (result) {
+            res.json(result);
+        }).catch(next);
+    });
+
+function getTemplateById(id) {
+    return new Promise(function (resolve, reject) {
         models.message_templates.findOne({
             where: {
-                id: req.params.id
+                id: id
             }
         }).then(function (msgTpl) {
-            res.json(msgTpl);
+            resolve(msgTpl);
+        }).catch(function (err) {
+            reject(err);
         });
 
     });
+}
 
 // Delete message template by id
 router.delete('/templates/:id', function (req, res) {
