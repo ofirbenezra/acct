@@ -36,40 +36,56 @@ router.get('/', function (req, res, next) {
 
 //add message
 router.route('/')
-    .post(function (req, res) {
+    .post(function (req, res, next) {
         const recipients = req.body.reciever_ids;
-        models.sequelize.transaction(function (t) {
-            var promises = []
-            for (var i = 0; i < recipients.length; i++) {
-                var newPromise = models.messages.create({
+        getMaxMessageId().then(function (max_id) {
+            models.sequelize.transaction(function (t) {
+                var promises = []
+
+                for (var i = 0; i < recipients.length; i++) {
+                    var newPromise = models.messages.create({
+                            message_id: max_id + 1,
+                            sender_id: req.body.sender_id,
+                            reciever_id: recipients[i],
+                            title: req.body.title,
+                            body: req.body.body,
+                            sent_date: req.body.sent_date,
+                            file_id: req.body.file_id
+                        },
+                        {transaction: t});
+                    promises.push(newPromise);
+                }
+                ;
+                return Promise.all(promises).then(function (messages) {
+                    res.json({
+                        message_id: max_id + 1,
                         sender_id: req.body.sender_id,
-                        reciever_id: recipients[i],
+                        reciever_ids: recipients,
                         title: req.body.title,
                         body: req.body.body,
                         sent_date: req.body.sent_date,
                         file_id: req.body.file_id
-                    },
-                    {transaction: t});
-                promises.push(newPromise);
-            }
-            ;
-            return Promise.all(promises).then(function (messages) {
-                res.json({
-                    sender_id: req.body.sender_id,
-                    reciever_ids: recipients,
-                    title: req.body.title,
-                    body: req.body.body,
-                    sent_date: req.body.sent_date,
-                    file_id: req.body.file_id
+                    });
+                }).catch(function (err) {
+                    console.log(err);
+                    return next(err);
                 });
-            }).catch(function (err) {
-                console.log(err);
-                return next(err);
-            });
 
+            });
+        }).catch(function(err) {
+            return next(err);
         });
     });
 
+function getMaxMessageId() {
+    return new Promise(function (resolve, reject) {
+        models.messages.max('message_id').then(function (msg) {
+            resolve(msg);
+        }).catch(function (err) {
+            reject(err);
+        });
+    });
+}
 
 //update message_read
 router.route('/')

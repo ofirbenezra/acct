@@ -8,6 +8,10 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
+    message_id: {
+        type: DataTypes.INTEGER(11),
+        allowNull: false
+    },
     sender_id: {
       type: DataTypes.INTEGER(11),
       allowNull: true,
