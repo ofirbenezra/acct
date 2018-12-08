@@ -17,7 +17,17 @@ router.get('/', function (req, res, next) {
     models.messages.findAll({
         where: queryObj
     }).then(function (msg) {
-        res.json(msg);
+        let result = {};
+        msg.forEach(x => {
+            if(result[x.message_id]){
+                result[x.message_id][0]['reciever_id'] = result[x.message_id][0]['reciever_id'] + ',' + x.reciever_id;
+            }
+            else{
+                result[x.message_id] = [];
+                result[x.message_id].push(x.dataValues);
+            }
+        });
+        res.json(result);
     });
 
 });
