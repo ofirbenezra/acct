@@ -20,14 +20,14 @@ router.get('/', function (req, res, next) {
         let result = {};
         msg.forEach(x => {
             if(result[x.message_id]){
-                result[x.message_id][0]['reciever_id'] = result[x.message_id][0]['reciever_id'] + ',' + x.reciever_id;
+                result[x.message_id]['reciever_id'] = result[x.message_id]['reciever_id'] + ',' + x.reciever_id;
             }
             else{
                 result[x.message_id] = [];
-                result[x.message_id].push(x.dataValues);
+                result[x.message_id] = x.dataValues;
             }
         });
-        res.json(result);
+        res.json(Object.values(result));
     });
 
 });
