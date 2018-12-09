@@ -70,7 +70,7 @@ router.route('/')
                     res.json({
                         message_id: max_id + 1,
                         sender_id: req.body.sender_id,
-                        reciever_ids: recipients,
+                        reciever_id: recipients,
                         title: req.body.title,
                         body: req.body.body,
                         sent_date: req.body.sent_date,
