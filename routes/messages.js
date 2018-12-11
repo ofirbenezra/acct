@@ -47,7 +47,7 @@ router.get('/', function (req, res, next) {
 //add message
 router.route('/')
     .post(function (req, res, next) {
-        const recipients = req.body.reciever_ids;
+        const recipients = req.body.reciever_id;
         getMaxMessageId().then(function (max_id) {
             models.sequelize.transaction(function (t) {
                 var promises = []
