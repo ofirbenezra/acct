@@ -61,8 +61,7 @@ router.route('/')
                             body: req.body.body,
                             sent_date: req.body.sent_date,
                             file_id: req.body.file_id
-                        },
-                        {transaction: t});
+                        },{transaction: t});
                     promises.push(newPromise);
                 }
                 ;
