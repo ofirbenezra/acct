@@ -37,7 +37,7 @@ module.exports = function (sequelize, DataTypes) {
             allowNull: true
         },
         fcm_token : {
-            type: DataTypes.STRING(200),
+            type: DataTypes.STRING(300),
             allowNull: true
         }
     }, {
