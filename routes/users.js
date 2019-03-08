@@ -75,5 +75,19 @@ router.delete('/:id', function (req, res) {
     });
 });
 
+//Update FCM token
+router.route('/:user_id/token')
+    .put(function (req, res) {
+        models.users.update({
+            "fcm_token": req.body.token
+        },
+        {
+            where: {
+                id: req.params.user_id
+            }
+        }).then(function (user) {
+        res.json(user);
+    });
+});
 
 module.exports = router;

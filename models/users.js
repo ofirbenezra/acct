@@ -35,6 +35,10 @@ module.exports = function (sequelize, DataTypes) {
         user_type: {
             type: DataTypes.INTEGER(11),
             allowNull: true
+        },
+        fcm_token : {
+            type: DataTypes.STRING(200),
+            allowNull: true
         }
     }, {
         timestamps: false
