@@ -9,6 +9,10 @@ module.exports.sendPushNotification = function(token) {
 
   return new Promise(function(resolve, reject) {
     var message = {
+      notification: {
+        title: 'Hello Shlomi', 
+        body: 'This is a message from FCM' 
+      },
       data: {
         "title": "Firebase",
         "body": "Firebase is awesome"
