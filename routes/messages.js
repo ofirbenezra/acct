@@ -127,8 +127,8 @@ router.post('/:id/sendMessage', function (req, res) {
             id: req.params.id
         }
     }).then(function (user) {
-        pushNotification.sendPushNotification(user.fcm_token).then(res => {
-            res.json(res);
+        pushNotification.sendPushNotification(user.fcm_token).then(result => {
+            res.json(result);
         }, (error) => {
             console.log(error);
         });
