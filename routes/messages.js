@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 const promise = require('Promise');
+const pushNotification = require('../pushNotifications');
 
 //get messages by sender id
 router.get('/', function (req, res, next) {
@@ -119,6 +120,20 @@ router.delete('/:id', function (req, res) {
     });
 });
 
+// Send FCM message
+router.post('/:id/sendMessage', function (req, res) {
+    models.users.findOne({
+        where: {
+            id: req.params.id
+        }
+    }).then(function (user) {
+        pushNotification.sendPushNotification(user.fcm_token).then(res => {
+            res.json(res);
+        });
+    });
+    
+});
+
 //add message template
 router.route('/templates/')
     .post(function (req, res) {
@@ -201,4 +216,6 @@ router.delete('/templates/:id', function (req, res) {
         res.json({message: 'Message template with id ' + req.params.id + ' deleted!'});
     });
 });
+
+
 module.exports = router;
