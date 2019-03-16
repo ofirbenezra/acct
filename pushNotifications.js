@@ -5,18 +5,18 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://acct-ed7c8.firebaseio.com'
 });
-module.exports.sendPushNotification = function(token) {
+module.exports.sendPushNotification = function(token, title, message) {
 
   return new Promise(function(resolve, reject) {
     var message = {
       notification: {
-        title: 'Hello Shlomi', 
-        body: 'This is a message from FCM' 
+        title: title, 
+        body: message
       },
-      data: {
-        "title": "Firebase",
-        "body": "Firebase is awesome"
-      },
+      // data: {
+      //   "title": "Firebase",
+      //   "body": "Firebase is awesome"
+      // },
       token: token
     };
   

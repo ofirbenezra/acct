@@ -64,18 +64,34 @@ router.route('/')
                             file_id: req.body.file_id
                         },{transaction: t});
                     promises.push(newPromise);
-                }
-                ;
-                return Promise.all(promises).then(function (messages) {
-                    res.json({
-                        message_id: max_id + 1,
-                        sender_id: req.body.sender_id,
-                        reciever_id: recipients,
-                        title: req.body.title,
-                        body: req.body.body,
-                        sent_date: req.body.sent_date,
-                        file_id: req.body.file_id
-                    });
+                }               
+
+                return Promise.all(promises).then(function (messages) {   
+                    for (var j = 0; j < messages.length; j++) {
+                        models.users.find({
+                            where: {
+                                id: messages[j].reciever_id
+                            }
+                        }).then(function (user) {
+                            pushNotification.sendPushNotification(user.fcm_token, req.body.title, req.body.body)
+                            .then(result => {
+                                res.json(result);
+                            }, (error) => {
+                                console.log(error);
+                            });
+                        });
+                    } 
+                   
+
+                    // res.json({
+                    //     message_id: max_id + 1,
+                    //     sender_id: req.body.sender_id,
+                    //     reciever_id: recipients,
+                    //     title: req.body.title,
+                    //     body: req.body.body,
+                    //     sent_date: req.body.sent_date,
+                    //     file_id: req.body.file_id
+                    // });
                 }).catch(function (err) {
                     console.log(err);
                     return next(err);
