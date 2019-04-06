@@ -39,6 +39,10 @@ module.exports = function (sequelize, DataTypes) {
         fcm_token : {
             type: DataTypes.STRING(300),
             allowNull: true
+        },
+        address : {
+            type: DataTypes.STRING(50),
+            allowNull: true
         }
     }, {
         timestamps: false
