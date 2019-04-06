@@ -53,7 +53,9 @@ router.put('/', function (req, res, next) {
             "description": req.body.description,
             "last_name": req.body.last_name,
             "email": req.body.email,
-            "password": req.body.password
+            "password": req.body.password,
+            "business_name": req.business_name,
+            "address": req.address
         },
         {
             where: {
