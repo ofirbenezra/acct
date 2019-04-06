@@ -37,8 +37,8 @@ router.route('/')
             last_name: req.body.last_name,
             password: req.body.password,
             user_type: req.body.user_type,
-            business_name: req.business_name,
-            address: req.address
+            business_name: req.body.business_name,
+            address: req.body.address
         }).then(function (user) {
             res.json(user);
         });
@@ -54,8 +54,8 @@ router.put('/', function (req, res, next) {
             "last_name": req.body.last_name,
             "email": req.body.email,
             "password": req.body.password,
-            "business_name": req.business_name,
-            "address": req.address
+            "business_name": req.body.business_name,
+            "address": req.body.address
         },
         {
             where: {

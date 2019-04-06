@@ -16,6 +16,7 @@ router.get('/:office_id', function (req, res, next) {
 //add office_details
 router.route('/')
     .post(function (req, res) {
+        console.log('Adding Office with payload: ' + JSON.stringify(req, null, 2));
         models.office_details.create({
             office_id: req.body.office_id,
             office_type: req.body.office_type,
@@ -24,9 +25,9 @@ router.route('/')
             city: req.body.city,
             street_number: req.body.street_number,
             zip_code: req.body.zip_code,
-            office_name: req.office_name,
-            main_contact_first_name: req.main_contact_first_name,
-            main_contact_last_name: req.main_contact_last_name
+            office_name: req.body.office_name,
+            main_contact_first_name: req.body.main_contact_first_name,
+            main_contact_last_name: req.body.main_contact_last_name
         }).then(function (office) {
             res.json(office);
         });
