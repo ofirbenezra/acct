@@ -36,7 +36,8 @@ router.route('/')
             name: req.body.name,
             last_name: req.body.last_name,
             password: req.body.password,
-            user_type: req.body.user_type
+            user_type: req.body.user_type,
+            business_name: req.business_name
         }).then(function (user) {
             res.json(user);
         });

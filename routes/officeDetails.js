@@ -23,7 +23,10 @@ router.route('/')
             country: req.body.country,
             city: req.body.city,
             street_number: req.body.street_number,
-            zip_code: req.body.zip_code
+            zip_code: req.body.zip_code,
+            office_name: req.office_name,
+            main_contact_first_name: req.main_contact_first_name,
+            main_contact_last_name: req.main_contact_last_name
         }).then(function (office) {
             res.json(office);
         });
