@@ -5,28 +5,28 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: 'https://acct-ed7c8.firebaseio.com'
 });
-module.exports.sendPushNotification = function(token, title, body) {
+module.exports.sendPushNotification = function(token, title, message) {
 
   return new Promise(function(resolve, reject) {
-    var message = {
-      // notification: {
-      //   title: title, 
-      //   body: message
-      // },
-      data: {
+    var msg = {
+      notification: {
         title: title, 
-        body: body
+        body: message
       },
+      // data: {
+      //   "title": "Firebase",
+      //   "body": "Firebase is awesome"
+      // },
       token: token
     };
   
     // Send a message to the device corresponding to the provided
     // registration token.
-    admin.messaging().send(message)
+    admin.messaging().send(msg)
       .then((response) => {
         // Response is a message ID string.
         console.log('Successfully sent message:', response);
-        resolve('Successfully sent message');
+        resolve({ message: 'Successfully sent message'});
       })
       .catch((error) => {
         console.log('Error sending message:', error);
