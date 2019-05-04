@@ -126,13 +126,13 @@ router.route('/')
     });
 
 // Delete message by id
-router.delete('/:id', function (req, res) {
+router.delete('/:message_id', function (req, res) {
     models.messages.destroy({
         where: {
-            id: req.params.id
+            message_id: req.params.message_id
         }
-    }).then(function () {
-        res.json({message: 'Message with id ' + req.params.id + ' deleted!'});
+    }).then(function (msg) {
+        res.json({message: 'Message ' + msg + ' with id ' + req.params.message_id + ' deleted!'});
     });
 });
 

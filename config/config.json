@@ -19,8 +19,8 @@
   "production": {
     "username": "ost",
     "password": "Attunity@2018",
-    "database": "acct",
-    "host": "34.250.254.80",
+    "database": "easy_office",
+    "host": "34.244.189.78",
     "dialect": "mysql"
   }
 }

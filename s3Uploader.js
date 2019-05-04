@@ -3,7 +3,7 @@ const Busboy = require('busboy');
 const promise = require('Promise');
 const fs = require('fs');
 
-const BUCKET_NAME = 'ost.acct';
+const BUCKET_NAME = 'easy-office-files';
 const IAM_USER_KEY = 'XXXXXXX';
 const IAM_USER_SECRET = 'XXXXX';
 
