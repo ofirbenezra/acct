@@ -12,6 +12,7 @@ var users = require('./routes/users');
 var messages = require('./routes/messages');
 var officeDetails = require('./routes/officeDetails');
 var fileRoutes = require('./routes/file');
+var acctRoutes = require('./routes/accountants');
 
 var app = express();
 
@@ -67,6 +68,7 @@ app.use('/users', users);
 app.use('/messages', messages);
 app.use('/office', officeDetails);
 app.use('/file', fileRoutes);
+app.use('/acct', acctRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

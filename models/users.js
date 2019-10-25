@@ -43,6 +43,10 @@ module.exports = function (sequelize, DataTypes) {
         address : {
             type: DataTypes.STRING(50),
             allowNull: true
+        },
+        main_acct: {
+            type: DataTypes.INTEGER(11),
+            allowNull: true
         }
     }, {
         timestamps: false

@@ -5,7 +5,7 @@ var models  = require('../models');
 //get users by office_id and user type
 router.get('/', function (req, res, next) {
     var sql  =  'SELECT USR.id, USR.office_phone, USR.name, USR.last_name, USR.office_phone, USR.office_id ' +
-                'FROM acct.users as USR INNER JOIN office_details as OD ON USR.office_id = OD.office_id ' +
+                'FROM users as USR INNER JOIN office_details as OD ON USR.office_id = OD.office_id ' +
                 'where USR.office_id = ' + req.query.office_id + ' AND USR.user_type = ' + req.query.user_type + ';';
     models.users.sequelize.query(sql,{ type: models.users.sequelize.QueryTypes.SELECT})
         .then(function(users) {
@@ -93,5 +93,6 @@ router.route('/:user_id/token')
         res.json(user);
     });
 });
+
 
 module.exports = router;
