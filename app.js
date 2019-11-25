@@ -63,12 +63,12 @@ app.use(logger('dev'));
 // app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
-app.use('/messages', messages);
-app.use('/office', officeDetails);
-app.use('/file', fileRoutes);
-app.use('/acct', acctRoutes);
+app.use('/api', index);
+app.use('/api/users', users);
+app.use('/api/messages', messages);
+app.use('/api/office', officeDetails);
+app.use('/api/file', fileRoutes);
+app.use('/api/acct', acctRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
