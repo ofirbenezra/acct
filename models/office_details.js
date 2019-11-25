@@ -46,6 +46,10 @@ module.exports = function (sequelize, DataTypes) {
         main_contact_last_name: {
             type: DataTypes.STRING(100),
             allowNull: true
+        },
+        logo_file_url: {
+            type: DataTypes.STRING(100),
+            allowNull: true
         }
     }, {
         timestamps: false
